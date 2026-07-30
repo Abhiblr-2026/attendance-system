@@ -25,10 +25,6 @@
         .ledger-card { background: #ffffff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); padding: 25px; margin-top: 30px; }
         .table th { background-color: var(--navy-blue) !important; color: white !important; font-weight: 600; }
     </style>
-    <script>
-        // ✏️ PASTE YOUR GOOGLE WEB APP LINK URL RIGHT HERE ON LINE 28:
-        const API_URL = "https://script.google.com/macros/s/AKfycbwMzpbH5BcFEZLfsgGJloXW8t_pknyNxZmqpO8MFNBG829TR0Q-0PXdfkQRWzPl7Fi5/exec"; 
-    </script>
 </head>
 <body>
 
@@ -114,11 +110,12 @@
             </div>
         </div>
 
-        <!-- Search Modules Layout -->
+        <!-- Complete Directory Log Table Module -->
         <div class="ledger-card">
-            <h5 class="mb-3" style="color: var(--navy-blue); font-weight: 700; text-transform: uppercase;">Active Staff Ledger Directory</h5>
+            <h5 class="mb-3" style="color: var(--navy-blue); font-weight: 700; text-transform: uppercase;">ALL EMPLOYEES LEDGER DIRECTORY</h5>
             <input type="text" id="searchBox" class="form-control mb-3" placeholder="🔍 Type employee ID or Name to filter data parameters instantly..." onkeyup="searchTable()">
             <div class="table-responsive">
                 <table class="table table-striped table-hover border align-middle mb-0">
                     <thead>
                         <tr>
+                            <th>SL</th><th>EMP ID</th><th>Employee Name</th><th>Designation</th><th>Department</th><th>Type</th><th class="text-center">Action Parameters</th>
