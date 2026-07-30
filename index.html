@@ -17,7 +17,13 @@
             <div class="col-md-2">
                 <select id="department" class="form-select"></select>
             </div>
-            <!-- Dynamic fields mapping row variables -->
+            <div class="col-md-2">
+            <select id="empType" class="form-select">
+            <option value="On Roll">On Roll</option>
+            <option value="Contract Basis">Contract Basis</option>
+            </select>
+            </div>
+           <!-- Dynamic fields mapping row variables -->
             <div class="col-md-3"><input type="date" id="doj" class="form-control" placeholder="DOJ"></div>
             <div class="col-md-3"><input type="text" id="phone" class="form-control" placeholder="Phone No."></div>
             <div class="col-md-3"><input type="text" id="aadhar" class="form-control" placeholder="Aadhar No."></div>
@@ -61,14 +67,24 @@
         document.getElementById('empForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             let payload = {
-                actionType: "add", slNo: document.getElementById('slNo').value, name: document.getElementById('empName').value,
-                empId: document.getElementById('empId').value, designation: document.getElementById('designation').value,
-                department: document.getElementById('department').value, doj: document.getElementById('doj').value,
-                phone: document.getElementById('phone').value, aadhar: document.getElementById('aadhar').value,
-                pan: document.getElementById('pan').value, esic: document.getElementById('esic').value,
-                uan: document.getElementById('uan').value, bank: document.getElementById('bank').value,
-                account: document.getElementById('account').value, ifsc: document.getElementById('ifsc').value, dateLeft: document.getElementById('dateLeft').value
-            };
+    actionType: "add", 
+    slNo: document.getElementById('slNo').value, 
+    name: document.getElementById('empName').value,
+    empId: document.getElementById('empId').value, 
+    designation: document.getElementById('designation').value,
+    department: document.getElementById('department').value, 
+    empType: document.getElementById('empType').value, // <-- ADDED THIS ROW VARIABLE
+    doj: document.getElementById('doj').value,
+    phone: document.getElementById('phone').value, 
+    aadhar: document.getElementById('aadhar').value,
+    pan: document.getElementById('pan').value, 
+    esic: document.getElementById('esic').value,
+    uan: document.getElementById('uan').value, 
+    bank: document.getElementById('bank').value,
+    account: document.getElementById('account').value, 
+    ifsc: document.getElementById('ifsc').value, 
+    dateLeft: document.getElementById('dateLeft').value
+};
             await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
             alert("Saved successfully!"); loadEmployees();
         });
