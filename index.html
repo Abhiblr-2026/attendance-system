@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABHI INDUSTRIES - Admin Dashboard</title>
-    <!-- Bootstrap CSS Framework -->
+    <title>ABHI INDUSTRIES BENGALURU EMPLOYEES DATABASE MANAGEMENT SYSTEM</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://jsdelivr.net" rel="stylesheet">
     <style>
         :root {
@@ -14,206 +14,228 @@
         body {
             background-color: var(--navy-blue);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
+            padding: 30px 15px;
         }
-        .main-container {
-            max-width: 1100px;
-            margin: 40px auto;
+        .system-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .form-card {
-            background: #ffffff;
-            border-radius: 12px;
-            border-top: 6px solid var(--corporate-yellow);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        .main-header-banner {
+            background-color: #1d4ed8;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            border-radius: 4px 4px 0 0;
+            text-transform: uppercase;
+        }
+        .split-card {
+            background: #f3f4f6;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             padding: 30px;
         }
-        .table-card {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-            padding: 25px;
-            margin-top: 30px;
+        .form-column {
+            border-right: 2px solid #e5e7eb;
+            padding-right: 30px;
         }
-        .logo-header {
-            max-height: 80px;
+        @media (max-width: 768px) {
+            .form-column { border-right: none; padding-right: 0; }
+        }
+        .logo-column {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-left: 20px;
+        }
+        .brand-logo-img {
+            max-width: 100%;
+            height: auto;
+            max-height: 280px;
             object-fit: contain;
+            border-radius: 8px;
         }
-        .btn-corporate {
-            background-color: var(--corporate-yellow);
-            color: var(--navy-blue);
+        .form-group-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .field-label {
+            width: 180px;
             font-weight: 600;
-            border: none;
-            transition: all 0.2s ease;
-        }
-        .btn-corporate:hover {
-            background-color: #d6a20f;
-            color: var(--navy-blue);
-            transform: translateY(-1px);
-        }
-        .form-label {
-            font-weight: 500;
             color: var(--navy-blue);
             font-size: 0.9rem;
-            margin-bottom: 4px;
+            margin-bottom: 0;
+        }
+        .field-separator {
+            width: 20px;
+            font-weight: 600;
+            color: var(--navy-blue);
+            text-align: center;
+        }
+        .field-input-box {
+            flex: 1;
         }
         .form-control, .form-select {
-            border: 1px solid #ced4da;
-            border-radius: 6px;
+            border: 1px solid #9ca3af;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            background-color: #ffffff;
         }
         .form-control:focus, .form-select:focus {
-            border-color: var(--navy-blue);
-            box-shadow: 0 0 0 0.2rem rgba(13,35,70,0.25);
+            border-color: #1d4ed8;
+            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15);
+        }
+        .btn-submit-record {
+            background-color: #1d4ed8;
+            color: white;
+            font-weight: 700;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            width: 100%;
+            margin-top: 15px;
+            transition: background 0.2s;
+        }
+        .btn-submit-record:hover {
+            background-color: #1e40af;
+        }
+        .ledger-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 25px;
+            margin-top: 30px;
         }
         .table th {
             background-color: var(--navy-blue) !important;
             color: white !important;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .table td {
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
-    <div class="container main-container">
-        <!-- Centered Core Form Card -->
-        <div class="form-card mx-auto">
-            <div class="text-center mb-4">
-                <img src="logo.jpg" alt="ABHI INDUSTRIES" class="logo-header mb-2">
-                <h4 class="text-uppercase tracking-wider mt-2" style="color: var(--navy-blue); font-weight: 700;">Employee Registry Dashboard</h4>
-                <div class="badge bg-secondary">System Administrator Mode</div>
-            </div>
+    <div class="system-wrapper">
+        <!-- Top Blue Header Title Layout -->
+        <div class="main-header-banner">
+            ABHI INDUSTRIES BENGALURU EMPLOYEES DATABASE MANAGEMENT SYSTEM
+        </div>
 
-            <form id="empForm" class="row g-3">
-                <div class="col-md-2">
-                    <label class="form-label">SL No</label>
-                    <input type="text" id="slNo" class="form-control" required placeholder="01">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Employee Full Name</label>
-                    <input type="text" id="empName" class="form-control" required placeholder="John Doe">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">EMP ID Registration</label>
-                    <input type="text" id="empId" class="form-control" required placeholder="EMP101">
-                </div>
+        <!-- Split Screen Flex Form Structure Card -->
+        <div class="split-card">
+            <div class="row g-4">
                 
-                <div class="col-md-4">
-                    <label class="form-label">Designation Assignment</label>
-                    <select id="designation" class="form-select"></select>
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Department Hub</label>
-                    <select id="department" class="form-select"></select>
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Employment Type</label>
-                    <select id="empType" class="form-select">
-                        <option value="On Roll">On Roll</option>
-                        <option value="Contract Basis">Contract Basis</option>
-                    </select>
-                </div>
+                <!-- Left Input Fields Column -->
+                <div class="col-md-7 form-column">
+                    <form id="empForm">
+                        
+                        <div class="form-group-row">
+                            <label class="field-label">SL No</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box"><input type="text" id="slNo" class="form-control" required></div>
+                        </div>
 
-                <div class="col-md-4">
-                    <label class="form-label">Date of Joining (DOJ)</label>
-                    <input type="date" id="doj" class="form-control">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Mobile Contact No.</label>
-                    <input type="tel" id="phone" class="form-control" placeholder="Phone No.">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Aadhar Verification Number</label>
-                    <input type="text" id="aadhar" class="form-control" placeholder="Aadhar No.">
-                </div>
+                        <div class="form-group-row">
+                            <label class="field-label">Employee Name</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box"><input type="text" id="empName" class="form-control" required></div>
+                        </div>
 
-                <div class="col-md-4">
-                    <label class="form-label">PAN Card Tax ID</label>
-                    <input type="text" id="pan" class="form-control" placeholder="PAN No.">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">ESIC Insurance Registry</label>
-                    <input type="text" id="esic" class="form-control" placeholder="ESIC No.">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">UAN Provident Fund No.</label>
-                    <input type="text" id="uan" class="form-control" placeholder="UAN No.">
-                </div>
+                        <div class="form-group-row">
+                            <label class="field-label">EMP ID</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box"><input type="text" id="empId" class="form-control" required></div>
+                        </div>
 
-                <div class="col-md-4">
-                    <label class="form-label">Corporate Bank Name</label>
-                    <input type="text" id="bank" class="form-control" placeholder="Bank Name">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">Active Salary Account No.</label>
-                    <input type="text" id="account" class="form-control" placeholder="Account Number">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label">IFSC Financial Code</label>
-                    <input type="text" id="ifsc" class="form-control" placeholder="IFSC Code">
-                </div>
+                        <div class="form-group-row">
+                            <label class="field-label">Designation</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box"><select id="designation" class="form-select"></select></div>
+                        </div>
 
-                <div class="col-md-4">
-                    <label class="form-label">Exit Date (If Applicable)</label>
-                    <input type="date" id="dateLeft" class="form-control">
-                </div>
+                        <div class="form-group-row">
+                            <label class="field-label">Department</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box"><select id="department" class="form-select"></select></div>
+                        </div>
 
-                <div class="col-12 mt-4">
-                    <button type="submit" class="btn btn-corporate w-100 py-2 fs-5 text-uppercase">Commit Record to Database</button>
-                </div>
-            </form>
-        </div>
+                        <div class="form-group-row">
+                            <label class="field-label">Employment Type</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box">
+                                <select id="empType" class="form-select">
+                                    <option value="On Roll">On Roll</option>
+                                    <option value="Contract Basis">Contract Basis</option>
+                                </select>
+                            </div>
+                        </div>
 
-        <!-- Directory Tracking Sheet Module Layout -->
-        <div class="table-card">
-            <h5 class="mb-3" style="color: var(--navy-blue); font-weight: 600;">Active Staff Ledger Directory</h5>
-            <input type="text" id="searchBox" class="form-control mb-3" placeholder="🔍 Type to search records by ID or Name parameter instantly..." onkeyup="searchTable()">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th>EMP ID</th>
-                            <th>Staff Name</th>
-                            <th>Designation Role</th>
-                            <th>Department</th>
-                            <th>Type</th>
-                            <th class="text-center">Action Parameters</th>
-                        </tr>
-                    </thead>
-                    <tbody id="empTable"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+                        <div class="form-group-row">
+                            <label class="field-label">DOJ</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box"><input type="date" id="doj" class="form-control"></div>
+                        </div>
 
-    <script>
-        // PASTE YOUR GOOGLE SHEET WEB APP URL HERE:
-        const API_URL = "https://script.google.com/macros/s/AKfycbwMzpbH5BcFEZLfsgGJloXW8t_pknyNxZmqpO8MFNBG829TR0Q-0PXdfkQRWzPl7Fi5/exec"; 
-        
-        const desigs = ["HR cum Accounts", "Production Head", "Production Supervisor", "Shetter Maintenance", "Programmer", "Sr. Engg. Quality", "Engg. Quality", "CNC Operator", "VMC Operator", "Production Helper", "Maintenance Helper", "House Keeping", "Quality Inspector", "Final Inspector"];
-        const depts = ["Management", "Production", "Quality", "Maintenance"];
-        
-        desigs.forEach(d => document.getElementById('designation').innerHTML += `<option value="${d}">${d}</option>`);
-        depts.forEach(d => document.getElementById('department').innerHTML += `<option value="${d}">${d}</option>`);
+                        <div class="form-group-row">
+                            <label class="field-label">Phone No.</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box"><input type="text" id="phone" class="form-control"></div>
+                        </div>
 
-        async function loadEmployees() {
-            try {
-                let res = await fetch(API_URL);
-                let data = await res.json();
-                let html = "";
-                // Row index adjustments skipping structural headers
-                for(let i=1; i<data.length; i++) {
-                    if(!data[i][2]) continue; 
-                    html += `<tr>
-                        <td class="fw-bold text-secondary">${data[i][2]}</td>
-                        <td>${data[i][1]}</td>
-                        <td><span class="badge bg-light text-dark border">${data[i][3]}</span></td>
-                        <td>${data[i][4]}</td>
-                        <td><span class="badge ${data[i][5] === 'On Roll' ? 'bg-success' : 'bg-warning text-dark'}">${data[i][5]}</span></td>
-                        <td class="text-center"><button class="btn btn-outline-danger btn-sm px-3" onclick="deleteEmp('${data[i][2]}')">Delete</button></td>
-                    </tr>`;
-                }
-                document.getElementById('empTable').innerHTML = html;
-            } catch(e) { console.error("Data load failed", e); }
-        }
+                        <div class="form-group-row">
+                            <label class="field-label">Aadhar No.</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box"><input type="text" id="aadhar" class="form-control"></div>
+                        </div>
 
-        document.getElementById('empForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+                        <div class="form-group-row">
+                            <label class="field-label">PAN No.</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box"><input type="text" id="pan" class="form-control"></div>
+                        </div>
+
+                        <div class="form-group-row">
+                            <label class="field-label">ESIC No.</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box"><input type="text" id="esic" class="form-control"></div>
+                        </div>
+
+                        <div class="form-group-row">
+                            <label class="field-label">UAN No.</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box"><input type="text" id="uan" class="form-control"></div>
+                        </div>
+
+                        <div class="form-group-row">
+                            <label class="field-label">Bank Name</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box"><input type="text" id="bank" class="form-control"></div>
+                        </div>
+
+                        <div class="form-group-row">
+                            <label class="field-label">Account Number</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box"><input type="text" id="account" class="form-control"></div>
+                        </div>
+
+                        <div class="form-group-row">
+                            <label class="field-label">IFSC Code</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box"><input type="text" id="ifsc" class="form-control"></div>
+                        </div>
+
+                        <div class="form-group-row">
+                            <label class="field-label">Date of Left the Job</label>
+                            <span class="field-separator">:</span>
+                            <div class="field-input-box"><input type="date" id="dateLeft" class="form-control"></div>
+                        </div>
+
