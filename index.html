@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>Admin Employee Database</title>
+    <link href="https://jsdelivr.net" rel="stylesheet">
+</head>
+<body class="bg-light p-4">
+    <div class="container bg-white p-4 rounded shadow">
+        <h2>Admin Management Dashboard</h2>
+        <form id="empForm" class="row g-3 my-3">
+            <div class="col-md-2"><input type="text" id="slNo" class="form-control" placeholder="SL No" required></div>
+            <div class="col-md-3"><input type="text" id="empName" class="form-control" placeholder="Employee Name" required></div>
+            <div class="col-md-2"><input type="text" id="empId" class="form-control" placeholder="EMP ID" required></div>
+            <div class="col-md-3">
+                <select id="designation" class="form-select"></select>
+            </div>
+            <div class="col-md-2">
+                <select id="department" class="form-select"></select>
+            </div>
+            <!-- Dynamic fields mapping row variables -->
+            <div class="col-md-3"><input type="date" id="doj" class="form-control" placeholder="DOJ"></div>
+            <div class="col-md-3"><input type="text" id="phone" class="form-control" placeholder="Phone No."></div>
+            <div class="col-md-3"><input type="text" id="aadhar" class="form-control" placeholder="Aadhar No."></div>
+            <div class="col-md-3"><input type="text" id="pan" class="form-control" placeholder="PAN No."></div>
+            <div class="col-md-3"><input type="text" id="esic" class="form-control" placeholder="ESIC No."></div>
+            <div class="col-md-3"><input type="text" id="uan" class="form-control" placeholder="UAN No."></div>
+            <div class="col-md-3"><input type="text" id="bank" class="form-control" placeholder="Bank Name"></div>
+            <div class="col-md-3"><input type="text" id="account" class="form-control" placeholder="Account Number"></div>
+            <div class="col-md-3"><input type="text" id="ifsc" class="form-control" placeholder="IFSC Code"></div>
+            <div class="col-md-3"><input type="date" id="dateLeft" class="form-control"></div>
+            <div class="col-12"><button type="submit" class="btn btn-primary w-100">Save Employee Record</button></div>
+        </form>
+        <hr>
+        <input type="text" id="searchBox" class="form-control mb-3" placeholder="Search employees by ID or Name...">
+        <table class="table table-bordered">
+            <thead><tr><th>ID</th><th>Name</th><th>Designation</th><th>Department</th><th>Actions</th></tr></thead>
+            <tbody id="empTable"></tbody>
+        </table>
+    </div>
+    <script>
+        const API_URL = "YOUR_WEB_APP_URL_HERE";
+        const desigs = ["HR cum Accounts", "Production Head", "Production Supervisor", "Shetter Maintenance", "Programmer", "Sr. Engg. Quality", "Engg. Quality", "CNC Operator", "VMC Operator", "Production Helper", "Maintenance Helper", "House Keeping", "Quality Inspector", "Final Inspector"];
+        const depts = ["Management", "Production", "Quality", "Maintenance"];
+        
+        // Populate Dropdowns
+        desigs.forEach(d => document.getElementById('designation').innerHTML += `<option value="${d}">${d}</option>`);
+        depts.forEach(d => document.getElementById('department').innerHTML += `<option value="${d}">${d}</option>`);
+
+        // Load Employee Database Lookups
+        async function loadEmployees() {
+            let res = await fetch(API_URL);
+            let data = await res.json();
+            let html = "";
+            for(let i=1; i<data.length; i++) {
+                html += `<tr><td>${data[i][2]}</td><td>${data[i][1]}</td><td>${data[i][3]}</td><td>${data[i][4]}</td>
+                <td><button class="btn btn-danger btn-sm" onclick="deleteEmp('${data[i][2]}')">Delete</button></td></tr>`;
+            }
+            document.getElementById('empTable').innerHTML = html;
+        }
+
+        document.getElementById('empForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            let payload = {
+                actionType: "add", slNo: document.getElementById('slNo').value, name: document.getElementById('empName').value,
+                empId: document.getElementById('empId').value, designation: document.getElementById('designation').value,
+                department: document.getElementById('department').value, doj: document.getElementById('doj').value,
+                phone: document.getElementById('phone').value, aadhar: document.getElementById('aadhar').value,
+                pan: document.getElementById('pan').value, esic: document.getElementById('esic').value,
+                uan: document.getElementById('uan').value, bank: document.getElementById('bank').value,
+                account: document.getElementById('account').value, ifsc: document.getElementById('ifsc').value, dateLeft: document.getElementById('dateLeft').value
+            };
+            await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
+            alert("Saved successfully!"); loadEmployees();
+        });
+
+        async function deleteEmp(id) {
+            if(confirm("Delete employee?")) {
+                await fetch(API_URL, { method: "POST", body: JSON.stringify({ actionType: "delete", empId: id }) });
+                loadEmployees();
+            }
+        }
+        window.onload = loadEmployees;
+    </script>
+</body>
+</html>

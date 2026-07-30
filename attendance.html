@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Mobile Attendance</title>
+    <link href="https://jsdelivr.net" rel="stylesheet">
+</head>
+<body class="bg-dark text-white p-4">
+    <div class="container text-center py-5">
+        <h3>Employee Attendance Terminal</h3>
+        <div class="my-4"><input type="text" id="smartEmpId" class="form-control text-center form-control-lg" placeholder="Enter Your EMP ID"></div>
+        <div class="row g-3">
+            <div class="col-6"><button class="btn btn-success btn-lg w-100 py-3" onclick="submitAttendance('Login')">Clock In</button></div>
+            <div class="col-6"><button class="btn btn-danger btn-lg w-100 py-3" onclick="submitAttendance('Logout')">Clock Out</button></div>
+        </div>
+        <p id="msg" class="mt-4 text-warning"></p>
+    </div>
+    <script>
+        const API_URL = "YOUR_WEB_APP_URL_HERE";
+
+        function submitAttendance(status) {
+            let empId = document.getElementById('smartEmpId').value;
+            if(!empId) return alert("Please enter your EMP ID first");
+            
+            document.getElementById('msg').innerText = "Capturing secure tracking metadata...";
+            
+            navigator.geolocation.getCurrentPosition(async (pos) => {
+                let loc = `${pos.coords.latitude}, ${pos.coords.longitude}`;
+                let device = navigator.userAgent.includes("iPhone") ? "iPhone Mobile" : "Android/Mobile Device";
+                
+                // Fetch employee list to verify active name
+                let res = await fetch(API_URL);
+                let employees = await res.json();
+                let matchedEmp = employees.find(r => r[2].toString() === empId.toString());
+                
+                if(!matchedEmp) {
+                    document.getElementById('msg').innerText = "Error: Employee ID not found in database.";
+                    return;
+                }
+
+                let payload = {
+                    actionType: "attendance", empId: empId, empName: matchedEmp[1],
+                    status: status, location: loc, device: device
+                };
+
+                await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
+                document.getElementById('msg').innerText = `Success! ${matchedEmp[1]} logged ${status} successfully.`;
+            }, () => {
+                alert("GPS Geolocation access is strictly mandatory to complete submission.");
+            });
+        }
+    </script>
+</body>
+</html>
