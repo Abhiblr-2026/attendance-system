@@ -144,15 +144,15 @@
                     </form>
                 </div>
 
-                <!-- Right Side Logo -->
+                <!-- Right Side Intelligent Logo Locator -->
                 <div class="col-md-5 logo-column">
-                    <img src="logo.png" alt="ABHI INDUSTRIES Logo" class="brand-logo-img" onerror="this.onerror=null; this.src='logo.jpg';">
+                    <img id="brandLogo" src="logo.jpg" alt="ABHI INDUSTRIES Logo" class="brand-logo-img">
                 </div>
 
             </div>
         </div>
 
-        <!-- Searchable Directory -->
+        <!-- Searchable Directory Table -->
         <div class="ledger-card">
             <h5 class="mb-3" style="color: var(--navy-blue); font-weight: 700; text-transform: uppercase;">Active Staff Ledger Directory</h5>
             <input type="text" id="searchBox" class="form-control mb-3" placeholder="🔍 Type employee ID or Name to filter data parameters instantly..." onkeyup="searchTable()">
@@ -176,6 +176,7 @@
     </div>
 
     <script>
+        // TARGET SCRIPT URL SYNC INTERFACE DATA LINK
         const API_URL = "https://script.google.com/macros/s/AKfycbwMzpbH5BcFEZLfsgGJloXW8t_pknyNxZmqpO8MFNBG829TR0Q-0PXdfkQRWzPl7Fi5/exec"; 
         
         const desigs = ["HR cum Accounts", "Production Head", "Production Supervisor", "Shetter Maintenance", "Programmer", "Sr. Engg. Quality", "Engg. Quality", "CNC Operator", "VMC Operator", "Production Helper", "Maintenance Helper", "House Keeping", "Quality Inspector", "Final Inspector"];
@@ -184,7 +185,4 @@
         desigs.forEach(d => document.getElementById('designation').innerHTML += `<option value="${d}">${d}</option>`);
         depts.forEach(d => document.getElementById('department').innerHTML += `<option value="${d}">${d}</option>`);
 
-        async function loadEmployees() {
-            try {
-                let res = await fetch(API_URL);
-                let data = await res.json();
+        // Smart Format Scanner: Cycles filenames if default paths encounter load rules errors
