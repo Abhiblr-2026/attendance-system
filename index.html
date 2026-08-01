@@ -6,7 +6,7 @@
     <title>ABHI INDUSTRIES BENGALURU EMPLOYEES DATABASE MANAGEMENT SYSTEM</title>
     
     <script>
-        // 🟢 GOOGLE SCRIPT WEB APP LINK IS SECURELY LIFELOCKED ON LINE 10:
+        // ✏️ PASTE YOUR FRESH COPIED GOOGLE URL LINK RIGHT BETWEEN THESE QUOTES:
         const API_URL = "https://script.google.com/macros/s/AKfycbwMzpbH5BcFEZLfsgGJloXW8t_pknyNxZmqpO8MFNBG829TR0Q-0PXdfkQRWzPl7Fi5/exec";
     </script>
 
@@ -57,14 +57,34 @@
                     <div class="form-group-row">
                         <label class="field-label">Designation</label><span class="field-separator">:</span>
                         <div class="field-input-box">
-                            <select id="designation"></select>
+                            <select id="designation">
+                                <option value="HR cum Accounts">HR cum Accounts</option>
+                                <option value="Production Head">Production Head</option>
+                                <option value="Production Supervisor">Production Supervisor</option>
+                                <option value="Shetter Maintenance">Shetter Maintenance</option>
+                                <option value="Programmer">Programmer</option>
+                                <option value="Sr. Engg. Quality">Sr. Engg. Quality</option>
+                                <option value="Engg. Quality">Engg. Quality</option>
+                                <option value="CNC Operator">CNC Operator</option>
+                                <option value="VMC Operator">VMC Operator</option>
+                                <option value="Production Helper">Production Helper</option>
+                                <option value="Maintenance Helper">Maintenance Helper</option>
+                                <option value="House Keeping">House Keeping</option>
+                                <option value="Quality Inspector">Quality Inspector</option>
+                                <option value="Final Inspector">Final Inspector</option>
+                            </select>
                         </div>
                     </div>
                     
                     <div class="form-group-row">
                         <label class="field-label">Department</label><span class="field-separator">:</span>
                         <div class="field-input-box">
-                            <select id="department"></select>
+                            <select id="department">
+                                <option value="Management">Management</option>
+                                <option value="Production">Production</option>
+                                <option value="Quality">Quality</option>
+                                <option value="Maintenance">Maintenance</option>
+                            </select>
                         </div>
                     </div>
 
@@ -103,32 +123,3 @@
         <div class="ledger-card">
             <div class="ledger-title">ALL EMPLOYEES LEDGER DIRECTORY</div>
             <input type="text" id="searchBox" class="search-box" placeholder="🔍 Type employee ID or Name to filter data parameters instantly..." onkeyup="searchTable()">
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>EMP ID</th><th>Employee Name</th><th>Designation</th><th>Department</th><th>Type</th><th style="text-align:center;">Action Parameters</th>
-                        </tr>
-                    </thead>
-                    <tbody id="empTable"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const desigs = ["HR cum Accounts", "Production Head", "Production Supervisor", "Shetter Maintenance", "Programmer", "Sr. Engg. Quality", "Engg. Quality", "CNC Operator", "VMC Operator", "Production Helper", "Maintenance Helper", "House Keeping", "Quality Inspector", "Final Inspector"];
-        const depts = ["Management", "Production", "Quality", "Maintenance"];
-        
-        desigs.forEach(d => document.getElementById('designation').innerHTML += `<option value="${d}">${d}</option>`);
-        depts.forEach(d => document.getElementById('department').innerHTML += `<option value="${d}">${d}</option>`);
-
-        async function loadEmployees() {
-            try {
-                let res = await fetch(API_URL);
-                let data = await res.json();
-                let html = "";
-                // Fail-safe format array checker to catch sheet read anomalies cleanly
-                if(data && Array.isArray(data)) {
-                    for(let i=1; i<data.length; i++) {
-                        let row = data[i];
