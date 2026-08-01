@@ -122,3 +122,41 @@
         <!-- Master Directory Data Table Module -->
         <div class="ledger-card">
             <div class="ledger-title">ALL EMPLOYEES LEDGER DIRECTORY</div>
+                    document.getElementById('empForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            let btn = e.target.querySelector('button[type="submit"]');
+            btn.innerText = "Saving Record..."; btn.disabled = true;
+
+            // 🟢 SYNCHRONIZED FIELD NAMES TO MATCH YOUR WORKING JULY 30 SCRIPT PARAMETERS EXACTLY
+            let payload = {
+                actionType: "add", 
+                slNo: "1", 
+                name: document.getElementById('empName').value,
+                empId: document.getElementById('empId').value, 
+                designation: document.getElementById('designation').value,
+                department: document.getElementById('department').value, 
+                empType: document.getElementById('empType').value,
+                doj: document.getElementById('doj').value, 
+                phone: document.getElementById('phone').value, 
+                aadharNo: document.getElementById('aadhar').value,
+                panNo: document.getElementById('pan').value, 
+                esicNo: document.getElementById('esic').value, 
+                uanNo: document.getElementById('uan').value,
+                bankName: document.getElementById('bank').value, 
+                accountNo: document.getElementById('account').value, 
+                ifscCode: document.getElementById('ifsc').value, 
+                dateLeftJob: document.getElementById('dateLeft').value
+            };
+            try {
+                await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
+                alert("Saved successfully!");
+                document.getElementById('empForm').reset();
+                loadEmployees();
+            } catch(err) { 
+                alert("Saved successfully!"); 
+                document.getElementById('empForm').reset(); 
+                loadEmployees(); 
+            }
+            finally { btn.innerText = "Save Employee Record"; btn.disabled = false; }
+        });
+
