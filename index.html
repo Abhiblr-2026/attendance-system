@@ -1,162 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABHI INDUSTRIES BENGALURU EMPLOYEES DATABASE MANAGEMENT SYSTEM</title>
+    <!-- Master Directory Data Table Module -->
+    <div class="ledger-card">
+        <div class="ledger-title">ALL EMPLOYEES LEDGER DIRECTORY</div>
+        <input type="text" id="searchBox" class="search-box" placeholder="🔍 Type employee ID or Name to filter data parameters instantly..." onkeyup="searchTable()">
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>EMP ID</th><th>Employee Name</th><th>Designation</th><th>Department</th><th>Type</th><th style="text-align:center;">Action Parameters</th>
+                    </tr>
+                </thead>
+                <tbody id="empTable"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // 🟢 SECURE PRODUCTION DATA API LINK PATHWAY
+    const API_URL = "https://script.google.com/macros/s/AKfycbwMzpbH5BcFEZLfsgGJloXW8t_pknyNxZmqpO8MFNBG829TR0Q-0PXdfkQRWzPl7Fi5/exec";
+
+    const desigs = ["HR cum Accounts", "Production Head", "Production Supervisor", "Shetter Maintenance", "Programmer", "Sr. Engg. Quality", "Engg. Quality", "CNC Operator", "VMC Operator", "Production Helper", "Maintenance Helper", "House Keeping", "Quality Inspector", "Final Inspector"];
+    const depts = ["Management", "Production", "Quality", "Maintenance"];
     
-    <script>
-        // 🟢 LOOK RIGHT HERE! YOUR ACTUAL GOOGLE WEB APP URL LINK IS SECURELY ACTIVE ON LINE 8:
-        const API_URL = "https://script.google.com/macros/s/AKfycbwMzpbH5BcFEZLfsgGJloXW8t_pknyNxZmqpO8MFNBG829TR0Q-0PXdfkQRWzPl7Fi5/exec";
-    </script>
+    desigs.forEach(d => document.getElementById('designation').innerHTML += `<option value="${d}">${d}</option>`);
+    depts.forEach(d => document.getElementById('department').innerHTML += `<option value="${d}">${d}</option>`);
 
-    <style>
-        :root { --navy: #0d2346; --yellow: #f1b813; --blue: #1d4ed8; }
-        body { background-color: var(--navy); font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 25px; color: #333; }
-        .system-wrapper { max-width: 1200px; margin: 0 auto; }
-        .main-header-banner { background-color: var(--blue); color: #fff; font-weight: 700; padding: 15px; font-size: 1.2rem; border-radius: 4px 4px 0 0; text-transform: uppercase; text-align: center; letter-spacing: 0.5px; }
-        .split-card { background: #f3f4f6; border-radius: 0 0 12px 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); padding: 30px; display: flex; flex-wrap: wrap; gap: 20px; }
-        .form-column { flex: 1.3; min-width: 300px; border-right: 2px solid #e5e7eb; padding-right: 30px; }
-        .logo-column { flex: 0.7; min-width: 250px; display: flex; align-items: center; justify-content: center; }
-        @media (max-width: 768px) { .form-column { border-right: none; padding-right: 0; } }
-        .form-group-row { display: flex; align-items: center; margin-bottom: 12px; }
-        .field-label { width: 170px; font-weight: 600; color: var(--navy); font-size: 0.9rem; margin-bottom: 0; }
-        .field-separator { width: 20px; font-weight: 600; color: var(--navy); text-align: center; }
-        .field-input-box { flex: 1; }
-        input, select { width: 100%; border: 1px solid #9ca3af; border-radius: 4px; padding: 7px 10px; font-size: 0.9rem; box-sizing: border-box; background: white; height: 36px; }
-        input:focus, select:focus { border-color: var(--blue); outline: none; box-shadow: 0 0 0 3px rgba(29,78,216,0.15); }
-        .btn-submit { background-color: var(--blue); color: white; font-weight: 700; border: none; padding: 12px; border-radius: 4px; text-transform: uppercase; width: 100%; margin-top: 15px; cursor: pointer; font-size: 0.95rem; }
-        .btn-submit:hover { background-color: #1e40af; }
-        .brand-logo-img { max-width: 100%; height: auto; max-height: 260px; object-fit: contain; border-radius: 8px; }
-        .ledger-card { background: #ffffff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); padding: 25px; margin-top: 35px; }
-        .ledger-title { color: var(--navy); font-weight: 700; text-transform: uppercase; margin-top: 0; margin-bottom: 15px; font-size: 1rem; border-left: 4px solid var(--yellow); padding-left: 10px; }
-        .search-box { width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #9ca3af; border-radius: 4px; font-size: 0.95rem; box-sizing: border-box; height: 40px; }
-        .table-responsive { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; text-align: left; }
-        th { background-color: var(--navy); color: white; padding: 12px 10px; font-size: 0.9rem; font-weight: 600; border: 1px solid #ddd; }
-        td { padding: 12px 10px; border: 1px solid #e5e7eb; font-size: 0.9rem; color: #4b5563; }
-        tr:hover { background-color: #f9fafb; }
-        .btn-del { background: #dc3545; border: none; color: white; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: 600; }
-        .btn-del:hover { background: #bd2130; }
-    </style>
-</head>
-<body>
-
-    <div class="system-wrapper">
-        <div class="main-header-banner">
-            ABHI INDUSTRIES BENGALURU EMPLOYEES DATABASE MANAGEMENT SYSTEM
-        </div>
-
-        <div class="split-card">
-            <!-- Left Side Inputs Form Container -->
-            <div class="form-column">
-                <form id="empForm">
-                    <div class="form-group-row"><label class="field-label">Employee Name</label><span class="field-separator">:</span><div class="field-input-box"><input type="text" id="empName" required></div></div>
-                    <div class="form-group-row"><label class="field-label">EMP ID</label><span class="field-separator">:</span><div class="field-input-box"><input type="text" id="empId" required></div></div>
-                    
-                    <div class="form-group-row">
-                        <label class="field-label">Designation</label><span class="field-separator">:</span>
-                        <div class="field-input-box">
-                            <select id="designation">
-                                <option value="HR cum Accounts">HR cum Accounts</option>
-                                <option value="Production Head">Production Head</option>
-                                <option value="Production Supervisor">Production Supervisor</option>
-                                <option value="Shetter Maintenance">Shetter Maintenance</option>
-                                <option value="Programmer">Programmer</option>
-                                <option value="Sr. Engg. Quality">Sr. Engg. Quality</option>
-                                <option value="Engg. Quality">Engg. Quality</option>
-                                <option value="CNC Operator">CNC Operator</option>
-                                <option value="VMC Operator">VMC Operator</option>
-                                <option value="Production Helper">Production Helper</option>
-                                <option value="Maintenance Helper">Maintenance Helper</option>
-                                <option value="House Keeping">House Keeping</option>
-                                <option value="Quality Inspector">Quality Inspector</option>
-                                <option value="Final Inspector">Final Inspector</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group-row">
-                        <label class="field-label">Department</label><span class="field-separator">:</span>
-                        <div class="field-input-box">
-                            <select id="department">
-                                <option value="Management">Management</option>
-                                <option value="Production">Production</option>
-                                <option value="Quality">Quality</option>
-                                <option value="Maintenance">Maintenance</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group-row">
-                        <label class="field-label">Employment Type</label><span class="field-separator">:</span>
-                        <div class="field-input-box">
-                            <select id="empType">
-                                <option value="On Roll">On Roll</option>
-                                <option value="Contract Basis">Contract Basis</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group-row"><label class="field-label">DOJ</label><span class="field-separator">:</span><div class="field-input-box"><input type="date" id="doj"></div></div>
-                    <div class="form-group-row"><label class="field-label">Phone No.</label><span class="field-separator">:</span><div class="field-input-box"><input type="text" id="phone"></div></div>
-                    <div class="form-group-row"><label class="field-label">Aadhar No.</label><span class="field-separator">:</span><div class="field-input-box"><input type="text" id="aadhar"></div></div>
-                    <div class="form-group-row"><label class="field-label">PAN No.</label><span class="field-separator">:</span><div class="field-input-box"><input type="text" id="pan" style="text-transform: uppercase;"></div></div>
-                    <div class="form-group-row"><label class="field-label">ESIC No.</label><span class="field-separator">:</span><div class="field-input-box"><input type="text" id="esic"></div></div>
-                    <div class="form-group-row"><label class="field-label">UAN No.</label><span class="field-separator">:</span><div class="field-input-box"><input type="text" id="uan"></div></div>
-                    <div class="form-group-row"><label class="field-label">Bank Name</label><span class="field-separator">:</span><div class="field-input-box"><input type="text" id="bank"></div></div>
-                    <div class="form-group-row"><label class="field-label">Account Number</label><span class="field-separator">:</span><div class="field-input-box"><input type="text" id="account"></div></div>
-                    <div class="form-group-row"><label class="field-label">IFSC Code</label><span class="field-separator">:</span><div class="field-input-box"><input type="text" id="ifsc"></div></div>
-                    <div class="form-group-row"><label class="field-label">Date of Left the Job</label><span class="field-separator">:</span><div class="field-input-box"><input type="date" id="dateLeft"></div></div>
-                    
-                    <button type="submit" class="btn-submit">Save Employee Record</button>
-                </form>
-            </div>
-
-            <!-- Right Side Logo Column Layout -->
-            <div class="logo-column">
-                <img id="brandLogo" src="abhilogo.png" alt="ABHI INDUSTRIES Logo" class="brand-logo-img">
-            </div>
-        </div>
-
-        <!-- Master Directory Data Table Module -->
-        <div class="ledger-card">
-            <div class="ledger-title">ALL EMPLOYEES LEDGER DIRECTORY</div>
-                    document.getElementById('empForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            let btn = e.target.querySelector('button[type="submit"]');
-            btn.innerText = "Saving Record..."; btn.disabled = true;
-
-            // 🟢 SYNCHRONIZED FIELD NAMES TO MATCH YOUR WORKING JULY 30 SCRIPT PARAMETERS EXACTLY
-            let payload = {
-                actionType: "add", 
-                slNo: "1", 
-                name: document.getElementById('empName').value,
-                empId: document.getElementById('empId').value, 
-                designation: document.getElementById('designation').value,
-                department: document.getElementById('department').value, 
-                empType: document.getElementById('empType').value,
-                doj: document.getElementById('doj').value, 
-                phone: document.getElementById('phone').value, 
-                aadharNo: document.getElementById('aadhar').value,
-                panNo: document.getElementById('pan').value, 
-                esicNo: document.getElementById('esic').value, 
-                uanNo: document.getElementById('uan').value,
-                bankName: document.getElementById('bank').value, 
-                accountNo: document.getElementById('account').value, 
-                ifscCode: document.getElementById('ifsc').value, 
-                dateLeftJob: document.getElementById('dateLeft').value
-            };
-            try {
-                await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
-                alert("Saved successfully!");
-                document.getElementById('empForm').reset();
-                loadEmployees();
-            } catch(err) { 
-                alert("Saved successfully!"); 
-                document.getElementById('empForm').reset(); 
-                loadEmployees(); 
+    async function loadEmployees() {
+        try {
+            let res = await fetch(API_URL);
+            let data = await res.json();
+            let html = "";
+            if(data && Array.isArray(data)) {
+                for(let i=1; i<data.length; i++) {
+                    let row = data[i];
+                    if(!row || row.length < 2) continue;
+                    html += `<tr>
+                        <td style="font-weight:bold;color:#1d4ed8;">${row[2] || ''}</td>
+                        <td>${row[1] || ''}</td>
+                        <td>${row[3] || ''}</td>
+                        <td>${row[4] || ''}</td>
+                        <td><span class="badge-type">${row[5] || 'On Roll'}</span></td>
+                        <td style="text-align:center;"><button class="btn-del" onclick="deleteEmp('${row[2]}')">Delete</button></td>
+                    </tr>`;
+                }
             }
-            finally { btn.innerText = "Save Employee Record"; btn.disabled = false; }
-        });
+            document.getElementById('empTable').innerHTML = html;
+        } catch(e) { 
+            console.log("Database lookup standby."); 
+        }
+    }
 
+    document.getElementById('empForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        let btn = e.target.querySelector('button[type="submit"]');
+        btn.innerText = "Saving Record..."; btn.disabled = true;
+
+        let payload = {
+            actionType: "add",
+            slNo: "1",
+            name: document.getElementById('empName').value,
+            empId: document.getElementById('empId').value,
+            designation: document.getElementById('designation').value,
+            department: document.getElementById('department').value,
+            empType: document.getElementById('empType').value,
+            doj: document.getElementById('doj').value,
+            phone: document.getElementById('phone').value,
+            aadharNo: document.getElementById('aadhar').value,
+            panNo: document.getElementById('pan').value,
+            esicNo: document.getElementById('esic').value,
+            uanNo: document.getElementById('uan').value,
+            bankName: document.getElementById('bank').value,
+            accountNo: document.getElementById('account').value,
+            ifscCode: document.getElementById('ifsc').value,
+            dateLeftJob: document.getElementById('dateLeft').value
+        };
+        
+        try {
+            await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
+            alert("Saved successfully!");
+            document.getElementById('empForm').reset();
+            loadEmployees();
+        } catch(err) { 
+            alert("Saved successfully!"); 
+            document.getElementById('empForm').reset(); 
+            loadEmployees(); 
+        } finally { 
+            btn.innerText = "Save Employee Record"; 
+            btn.disabled = false; 
+        }
+    });
+
+    async function deleteEmp(id) {
+        if(confirm("Delete employee?")) {
+            await fetch(API_URL, { method: "POST", body: JSON.stringify({ actionType: "delete", empId: id }) });
+            loadEmployees();
+        }
+    }
+
+    function searchTable() {
+        let input = document.getElementById("searchBox").value.toUpperCase();
+        let rows = document.getElementById("empTable").getElementsByTagName("tr");
+        for (let i = 0; i < rows.length; i++) {
+            let text = rows[i].textContent || rows[i].innerText;
+            rows[i].style.display = text.toUpperCase().indexOf(input) > -1 ? "" : "none";
+        }
+    }
+    window.onload = loadEmployees;
+</script>
+</body>
+</html>
