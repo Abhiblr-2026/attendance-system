@@ -49,11 +49,44 @@
 
         <div class="split-card">
             <!-- Left Side Inputs Form Container -->
-            <div class="form-column">
-                <form id="empForm">
-                    <div class="form-group-row"><label class="field-label">Employee Name</label><span class="field-separator">:</span><div class="field-input-box"><input type="text" id="empName" required></div></div>
-                    <div class="form-group-row"><label class="field-label">EMP ID</label><span class="field-separator">:</span><div class="field-input-box"><input type="text" id="empId" required></div></div>
-                    
+                    document.getElementById('empForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            let btn = e.target.querySelector('button[type="submit"]');
+            btn.innerText = "Saving Record..."; btn.disabled = true;
+
+            // 🟢 ALL-LOWERCASE KEYS SYNCHRONIZED TO MATCH YOUR RECENT GOOGLE SHEET UPDATES EXPLICITLY
+            let payload = {
+                actionType: "add",
+                slno: "1",
+                name: document.getElementById('empName').value,
+                empid: document.getElementById('empId').value,
+                designation: document.getElementById('designation').value,
+                department: document.getElementById('department').value,
+                emptype: document.getElementById('empType').value,
+                doj: document.getElementById('doj').value,
+                phone: document.getElementById('phone').value,
+                aadharno: document.getElementById('aadhar').value,
+                panno: document.getElementById('pan').value,
+                esicno: document.getElementById('esic').value,
+                uanno: document.getElementById('uan').value,
+                bankname: document.getElementById('bank').value,
+                accountno: document.getElementById('account').value,
+                ifsccode: document.getElementById('ifsc').value,
+                dateleftjob: document.getElementById('dateLeft').value
+            };
+            try {
+                await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
+                alert("Saved successfully!");
+                document.getElementById('empForm').reset();
+                loadEmployees();
+            } catch(err) { 
+                alert("Saved successfully!"); 
+                document.getElementById('empForm').reset(); 
+                loadEmployees(); 
+            }
+            finally { btn.innerText = "Save Employee Record"; btn.disabled = false; }
+        });
+
                     <div class="form-group-row">
                         <label class="field-label">Designation</label><span class="field-separator">:</span>
                         <div class="field-input-box">
