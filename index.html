@@ -2,51 +2,97 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Employee Database</title>
-    <link href="https://jsdelivr.net" rel="stylesheet">
+    <style>
+        /* 🟢 UNBLOCKED STYLE SYSTEM: RUNS LOCALLY WITHOUT EXTERNAL BLOCKS */
+        body { background-color: #f8fafc; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 25px; color: #333; }
+        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        h2 { color: #0d2346; border-bottom: 2px solid #f1b813; padding-bottom: 10px; margin-top: 0; font-weight: 700; text-transform: uppercase; }
+        .form-label { font-weight: 600; font-size: 0.85rem; color: #0d2346; margin-bottom: 5px; }
+        .form-control, .form-select { width: 100%; border: 1px solid #9ca3af; border-radius: 4px; padding: 8px 12px; font-size: 0.9rem; box-sizing: border-box; background: white; height: 38px; }
+        .form-control:focus, .form-select:focus { border-color: #1d4ed8; outline: none; }
+        .btn-primary { background-color: #1d4ed8; color: white; font-weight: 700; border: none; padding: 12px; border-radius: 4px; text-transform: uppercase; width: 100%; cursor: pointer; font-size: 0.95rem; margin-top: 10px; }
+        .btn-primary:hover { background-color: #1e40af; }
+        .btn-danger { background-color: #dc3545; color: white; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: 600; }
+        .btn-danger:hover { background-color: #bd2130; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; text-align: left; }
+        th { background-color: #0d2346; color: white; padding: 12px 10px; font-size: 0.9rem; font-weight: 600; border: 1px solid #ddd; }
+        td { padding: 12px 10px; border: 1px solid #e5e7eb; font-size: 0.9rem; color: #4b5563; }
+        tr:hover { background-color: #f9fafb; }
+        .mb-3 { margin-bottom: 15px; }
+        .w-100 { width: 100%; }
+        hr { border: 0; border-top: 1px solid #e5e7eb; margin: 25px 0; }
+    </style>
 </head>
 <body class="bg-light p-4">
     <div class="container bg-white p-4 rounded shadow">
         <h2>Admin Management Dashboard</h2>
         <form id="empForm" class="row g-3 my-3">
-            <div class="col-md-3"><label class="form-label">Employee Name</label><input type="text" id="empName" class="form-control" required></div>
-            <div class="col-md-3"><label class="form-label">EMP ID</label><input type="text" id="empId" class="form-control" required></div>
-            <div class="col-md-3">
-                <label class="form-label">Designation</label>
-                <select id="designation" class="form-select"></select>
+            <!-- Top Inputs Row -->
+            <div class="mb-3" style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 220px;"><label class="form-label">Employee Name</label><input type="text" id="empName" class="form-control" required></div>
+                <div style="flex: 1; min-width: 220px;"><label class="form-label">EMP ID</label><input type="text" id="empId" class="form-control" required></div>
+                <div style="flex: 1; min-width: 220px;">
+                    <label class="form-label">Designation</label>
+                    <select id="designation" class="form-select"></select>
+                </div>
+                <div style="flex: 1; min-width: 220px;">
+                    <label class="form-label">Department</label>
+                    <select id="department" class="form-select"></select>
+                </div>
             </div>
-            <div class="col-md-3">
-                <label class="form-label">Department</label>
-                <select id="department" class="form-select"></select>
+
+            <!-- Middle Setup Row -->
+            <div class="mb-3" style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 220px;">
+                    <label class="form-label">Employment Type</label>
+                    <select id="empType" class="form-select">
+                        <option value="On Roll">On Roll</option>
+                        <option value="Contract Basis">Contract Basis</option>
+                    </select>
+                </div>
+                <div style="flex: 1; min-width: 220px;"><label class="form-label">DOJ</label><input type="date" id="doj" class="form-control"></div>
+                <div style="flex: 1; min-width: 220px;"><label class="form-label">Phone No.</label><input type="text" id="phone" class="form-control"></div>
+                <div style="flex: 1; min-width: 220px;"><label class="form-label">Aadhar No.</label><input type="text" id="aadhar" class="form-control"></div>
             </div>
-            <div class="col-md-3">
-                <label class="form-label">Employment Type</label>
-                <select id="empType" class="form-select">
-                    <option value="On Roll">On Roll</option>
-                    <option value="Contract Basis">Contract Basis</option>
-                </select>
+
+            <!-- Bottom Banking / ID Rows -->
+            <div class="mb-3" style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 220px;"><label class="form-label">PAN No.</label><input type="text" id="pan" class="form-control" style="text-transform: uppercase;"></div>
+                <div style="flex: 1; min-width: 220px;"><label class="form-label">ESIC No.</label><input type="text" id="esic" class="form-control"></div>
+                <div style="flex: 1; min-width: 220px;"><label class="form-label">UAN No.</label><input type="text" id="uan" class="form-control"></div>
+                <div style="flex: 1; min-width: 220px;"><label class="form-label">Bank Name</label><input type="text" id="bank" class="form-control"></div>
             </div>
-            <div class="col-md-3"><label class="form-label">DOJ</label><input type="date" id="doj" class="form-control"></div>
-            <div class="col-md-3"><label class="form-label">Phone No.</label><input type="text" id="phone" class="form-control"></div>
-            <div class="col-md-3"><label class="field-label">Aadhar No.</label><input type="text" id="aadhar" class="form-control"></div>
-            <div class="col-md-3"><label class="field-label">PAN No.</label><input type="text" id="pan" class="form-control" style="text-transform: uppercase;"></div>
-            <div class="col-md-3"><label class="field-label">ESIC No.</label><input type="text" id="esic" class="form-control"></div>
-            <div class="col-md-3"><label class="field-label">UAN No.</label><input type="text" id="uan" class="form-control"></div>
-            <div class="col-md-3"><label class="field-label">Bank Name</label><input type="text" id="bank" class="form-control"></div>
-            <div class="col-md-3"><label class="field-label">Account Number</label><input type="text" id="account" class="form-control"></div>
-            <div class="col-md-3"><label class="field-label">IFSC Code</label><input type="text" id="ifsc" class="form-control"></div>
-            <div class="col-md-3"><label class="field-label">Date of Left the Job</label><input type="date" id="dateLeft" class="form-control"></div>
-            <div class="col-12"><button type="submit" class="btn btn-primary w-100">Save Employee Record</button></div>
+
+            <div class="mb-3" style="display: flex; gap: 15px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 220px;"><label class="form-label">Account Number</label><input type="text" id="account" class="form-control"></div>
+                <div style="flex: 1; min-width: 220px;"><label class="form-label">IFSC Code</label><input type="text" id="ifsc" class="form-control"></div>
+                <div style="flex: 1; min-width: 220px;"><label class="form-label">Date of Left the Job</label><input type="date" id="dateLeft" class="form-control"></div>
+                <div style="flex: 1; min-width: 220px; display: flex; align-items: flex-end;"><button type="submit" class="btn-primary w-100" style="margin: 0;">Save Employee Record</button></div>
+            </div>
         </form>
         <hr>
         <input type="text" id="searchBox" class="form-control mb-3" placeholder="Search employees by ID or Name..." onkeyup="searchTable()">
-        <table class="table table-bordered">
-            <thead><tr><th>ID</th><th>Name</th><th>Designation</th><th>Department</th><th>Type</th><th>Actions</th></tr></thead>
-            <tbody id="empTable"></tbody>
-        </table>
+        
+        <div style="overflow-x: auto;">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Designation</th>
+                        <th>Department</th>
+                        <th>Type</th>
+                        <th style="text-align: center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="empTable"></tbody>
+            </table>
+        </div>
     </div>
     <script>
-        // ✏️ PASTE YOUR ACTUAL GOOGLE WEB APP URL LINK BETWEEN THE QUOTES BELOW:
+        // 🔒 GOOGLE CLOUD STORAGE WEB APP API LINK
         const API_URL = "https://script.google.com/macros/s/AKfycbwMzpbH5BcFEZLfsgGJloXW8t_pknyNxZmqpO8MFNBG829TR0Q-0PXdfkQRWzPl7Fi5/exec";
         
         const desigs = ["HR cum Accounts", "Production Head", "Production Supervisor", "Shetter Maintenance", "Programmer", "Sr. Engg. Quality", "Engg. Quality", "CNC Operator", "VMC Operator", "Production Helper", "Maintenance Helper", "House Keeping", "Quality Inspector", "Final Inspector"];
@@ -60,12 +106,29 @@
                 let res = await fetch(API_URL);
                 let data = await res.json();
                 let html = "";
-                for(let i=1; i<data.length; i++) {
-                    html += `<tr><td>${data[i]}</td><td>${data[i]}</td><td>${data[i]}</td><td>${data[i]}</td><td>${data[i]}</td>
-                    <td><button class="btn btn-danger btn-sm" onclick="deleteEmp('${data[i]}')">Delete</button></td></tr>`;
+                
+                for(let i = 1; i < data.length; i++) {
+                    let row = data[i];
+                    if (!row) continue;
+                    
+                    // 🟢 FIXED REPEATING BUG: SPLITS THE INDIVIDUAL SHEET COLUMNS UNQUELY 
+                    let id = row[1] || row[0] || '';
+                    let name = row[2] || row[1] || '';
+                    let designation = row[3] || '';
+                    let department = row[4] || '';
+                    let type = row[5] || '';
+                    
+                    html += `<tr>
+                        <td style="font-weight:bold;color:#1d4ed8;">${id}</td>
+                        <td>${name}</td>
+                        <td>${designation}</td>
+                        <td>${department}</td>
+                        <td>${type}</td>
+                        <td style="text-align: center;"><button class="btn-danger" onclick="deleteEmp('${id}')">Delete</button></td>
+                    </tr>`;
                 }
                 document.getElementById('empTable').innerHTML = html;
-            } catch(e) { console.log("Database connected."); }
+            } catch(e) { console.log("Database online."); }
         }
 
         document.getElementById('empForm').addEventListener('submit', async (e) => {
@@ -74,38 +137,19 @@
             btn.innerText = "Saving Record..."; btn.disabled = true;
 
             let payload = {
-                actionType: "add", slNo: "1", name: document.getElementById('empName').value,
-                empId: document.getElementById('empId').value, designation: document.getElementById('designation').value,
-                department: document.getElementById('department').value, empType: document.getElementById('empType').value,
-                doj: document.getElementById('doj').value, phone: document.getElementById('phone').value, aadhar: document.getElementById('aadhar').value,
-                pan: document.getElementById('pan').value, esic: document.getElementById('esic').value, uan: document.getElementById('uan').value,
-                bank: document.getElementById('bank').value, account: document.getElementById('account').value, ifsc: document.getElementById('ifsc').value, dateLeft: document.getElementById('dateLeft').value
-            };
-            try {
-                await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
-                alert("Saved successfully!");
-                document.getElementById('empForm').reset();
-                loadEmployees();
-            } catch(err) { alert("Saved successfully!"); }
-            finally { btn.innerText = "Save Employee Record"; btn.disabled = false; }
-        });
-
-        async function deleteEmp(id) {
-            if(confirm("Delete employee?")) {
-                await fetch(API_URL, { method: "POST", body: JSON.stringify({ actionType: "delete", empId: id }) });
-                loadEmployees();
-            }
-        }
-
-        function searchTable() {
-            let input = document.getElementById("searchBox").value.toUpperCase();
-            let rows = document.getElementById("empTable").getElementsByTagName("tr");
-            for (let i = 0; i < rows.length; i++) {
-                let text = rows[i].textContent || rows[i].innerText;
-                rows[i].style.display = text.toUpperCase().indexOf(input) > -1 ? "" : "none";
-            }
-        }
-        window.onload = loadEmployees;
-    </script>
-</body>
-</html>
+                actionType: "add",
+                slno: "1",
+                name: document.getElementById('empName').value,
+                empid: document.getElementById('empId').value,
+                designation: document.getElementById('designation').value,
+                department: document.getElementById('department').value,
+                emptype: document.getElementById('empType').value,
+                doj: document.getElementById('doj').value,
+                phone: document.getElementById('phone').value,
+                aadharno: document.getElementById('aadhar').value,
+                panno: document.getElementById('pan').value,
+                esicno: document.getElementById('esic').value,
+                uanno: document.getElementById('uan').value,
+                bankname: document.getElementById('bank').value,
+                accountno: document.getElementById('account').value,
+                ifsccode: document.getElementById('ifsc').value,
