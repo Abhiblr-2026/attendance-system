@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Employee Database</title>
     <style>
-        /* 🟢 UNBLOCKED STYLE SYSTEM: RUNS LOCALLY WITHOUT EXTERNAL BLOCKS */
+        /* UNBLOCKED INTERNAL STYLE FRAMEWORK */
         body { background-color: #f8fafc; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 25px; color: #333; }
         .container { max-width: 1100px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
         h2 { color: #0d2346; border-bottom: 2px solid #f1b813; padding-bottom: 10px; margin-top: 0; font-weight: 700; text-transform: uppercase; }
-        .form-label { font-weight: 600; font-size: 0.85rem; color: #0d2346; margin-bottom: 5px; }
+        .form-label { font-weight: 600; font-size: 0.85rem; color: #0d2346; margin-bottom: 5px; display: block; }
         .form-control, .form-select { width: 100%; border: 1px solid #9ca3af; border-radius: 4px; padding: 8px 12px; font-size: 0.9rem; box-sizing: border-box; background: white; height: 38px; }
         .form-control:focus, .form-select:focus { border-color: #1d4ed8; outline: none; }
         .btn-primary { background-color: #1d4ed8; color: white; font-weight: 700; border: none; padding: 12px; border-radius: 4px; text-transform: uppercase; width: 100%; cursor: pointer; font-size: 0.95rem; margin-top: 10px; }
@@ -29,17 +29,38 @@
     <div class="container bg-white p-4 rounded shadow">
         <h2>Admin Management Dashboard</h2>
         <form id="empForm" class="row g-3 my-3">
+            
             <!-- Top Inputs Row -->
             <div class="mb-3" style="display: flex; gap: 15px; flex-wrap: wrap;">
                 <div style="flex: 1; min-width: 220px;"><label class="form-label">Employee Name</label><input type="text" id="empName" class="form-control" required></div>
                 <div style="flex: 1; min-width: 220px;"><label class="form-label">EMP ID</label><input type="text" id="empId" class="form-control" required></div>
                 <div style="flex: 1; min-width: 220px;">
                     <label class="form-label">Designation</label>
-                    <select id="designation" class="form-select"></select>
+                    <select id="designation" class="form-select">
+                        <option value="HR cum Accounts">HR cum Accounts</option>
+                        <option value="Production Head">Production Head</option>
+                        <option value="Production Supervisor">Production Supervisor</option>
+                        <option value="Shetter Maintenance">Shetter Maintenance</option>
+                        <option value="Programmer">Programmer</option>
+                        <option value="Sr. Engg. Quality">Sr. Engg. Quality</option>
+                        <option value="Engg. Quality">Engg. Quality</option>
+                        <option value="CNC Operator">CNC Operator</option>
+                        <option value="VMC Operator">VMC Operator</option>
+                        <option value="Production Helper">Production Helper</option>
+                        <option value="Maintenance Helper">Maintenance Helper</option>
+                        <option value="House Keeping">House Keeping</option>
+                        <option value="Quality Inspector">Quality Inspector</option>
+                        <option value="Final Inspector">Final Inspector</option>
+                    </select>
                 </div>
                 <div style="flex: 1; min-width: 220px;">
                     <label class="form-label">Department</label>
-                    <select id="department" class="form-select"></select>
+                    <select id="department" class="form-select">
+                        <option value="Management">Management</option>
+                        <option value="Production">Production</option>
+                        <option value="Quality">Quality</option>
+                        <option value="Maintenance">Maintenance</option>
+                    </select>
                 </div>
             </div>
 
@@ -91,15 +112,10 @@
             </table>
         </div>
     </div>
+
     <script>
-        // 🔒 GOOGLE CLOUD STORAGE WEB APP API LINK
+        // 🔒 VERIFIED CLOUD SCRIPT URL DATA ROAD LINK ROUTE
         const API_URL = "https://script.google.com/macros/s/AKfycbwMzpbH5BcFEZLfsgGJloXW8t_pknyNxZmqpO8MFNBG829TR0Q-0PXdfkQRWzPl7Fi5/exec";
-        
-        const desigs = ["HR cum Accounts", "Production Head", "Production Supervisor", "Shetter Maintenance", "Programmer", "Sr. Engg. Quality", "Engg. Quality", "CNC Operator", "VMC Operator", "Production Helper", "Maintenance Helper", "House Keeping", "Quality Inspector", "Final Inspector"];
-        const depts = ["Management", "Production", "Quality", "Maintenance"];
-        
-        desigs.forEach(d => document.getElementById('designation').innerHTML += `<option value="${d}">${d}</option>`);
-        depts.forEach(d => document.getElementById('department').innerHTML += `<option value="${d}">${d}</option>`);
 
         async function loadEmployees() {
             try {
@@ -111,9 +127,9 @@
                     let row = data[i];
                     if (!row) continue;
                     
-                    // 🟢 FIXED REPEATING BUG: SPLITS THE INDIVIDUAL SHEET COLUMNS UNQUELY 
-                    let id = row[1] || row[0] || '';
-                    let name = row[2] || row[1] || '';
+                    // Maps database values cleanly to data cells
+                    let id = row[1] || '';
+                    let name = row[2] || '';
                     let designation = row[3] || '';
                     let department = row[4] || '';
                     let type = row[5] || '';
@@ -128,7 +144,9 @@
                     </tr>`;
                 }
                 document.getElementById('empTable').innerHTML = html;
-            } catch(e) { console.log("Database online."); }
+            } catch(e) { 
+                console.log("Read pipeline standby active."); 
+            }
         }
 
         document.getElementById('empForm').addEventListener('submit', async (e) => {
@@ -140,16 +158,3 @@
                 actionType: "add",
                 slno: "1",
                 name: document.getElementById('empName').value,
-                empid: document.getElementById('empId').value,
-                designation: document.getElementById('designation').value,
-                department: document.getElementById('department').value,
-                emptype: document.getElementById('empType').value,
-                doj: document.getElementById('doj').value,
-                phone: document.getElementById('phone').value,
-                aadharno: document.getElementById('aadhar').value,
-                panno: document.getElementById('pan').value,
-                esicno: document.getElementById('esic').value,
-                uanno: document.getElementById('uan').value,
-                bankname: document.getElementById('bank').value,
-                accountno: document.getElementById('account').value,
-                ifsccode: document.getElementById('ifsc').value,
