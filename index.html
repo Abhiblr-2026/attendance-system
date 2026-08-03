@@ -36,29 +36,33 @@
         }
 
         document.getElementById('empForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
+            e.preventDefault(); // Prevents page from going blank or refreshing
+            
             let btn = e.target.querySelector('button[type="submit"]');
-            btn.innerText = "Saving Record..."; btn.disabled = true;
+            btn.innerText = "Saving Record..."; 
+            btn.disabled = true;
 
+            // LOWERCASE DATA KEYS SYNCHRONIZED TO PREVENT SCRIPT COLLAPSES
             let payload = {
                 actionType: "add",
-                slNo: "1",
+                slno: "1",
                 name: document.getElementById('empName').value,
-                empId: document.getElementById('empId').value,
+                empid: document.getElementById('empId').value,
                 designation: document.getElementById('designation').value,
                 department: document.getElementById('department').value,
-                empType: document.getElementById('empType').value,
+                emptype: document.getElementById('empType').value,
                 doj: document.getElementById('doj').value,
                 phone: document.getElementById('phone').value,
-                aadharNo: document.getElementById('aadhar').value,
-                panNo: document.getElementById('pan').value,
-                esicNo: document.getElementById('esic').value,
-                uanNo: document.getElementById('uan').value,
-                bankName: document.getElementById('bank').value,
-                accountNo: document.getElementById('account').value,
-                ifscCode: document.getElementById('ifsc').value,
-                dateLeftJob: document.getElementById('dateLeft').value
+                aadharno: document.getElementById('aadhar').value,
+                panno: document.getElementById('pan').value,
+                esicno: document.getElementById('esic').value,
+                uanno: document.getElementById('uan').value,
+                bankname: document.getElementById('bank').value,
+                accountno: document.getElementById('account').value,
+                ifsccode: document.getElementById('ifsc').value,
+                dateleftjob: document.getElementById('dateLeft').value
             };
+
             try {
                 await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
                 alert("Saved successfully!");
